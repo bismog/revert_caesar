@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+
+# Caesar Cipher
+MAX_KEY_SIZE = 26
+EXCHANGE=True
+# def getMode():
+#     while True:
+#         print('Do you wish to encrypt or decrypt a message?')
+#         mode = input().lower()
+#         if mode in 'encrypt e decrypt d'.split():
+#             return mode
+#         else:
+#             print('Enter either "encrypt" or "e" or "decrypt" or "d".')
+
+def getMessage():
+    print('Enter your message:')
+    # return input()
+    return raw_input()
+
+# def getKey():
+#     key = 0
+#     while True:
+#         print('Enter the key number (1-%s)' % (MAX_KEY_SIZE))
+#         key = int(input())
+#         if (key >= 1 and key <= MAX_KEY_SIZE):
+#             return key
+
+def getTranslatedMessage(mode, message, key):
+    if mode[0] == 'd':
+        key = -key
+    translated = ''
+    for symbol in message:
+        if symbol.isalpha():
+            num = ord(symbol)
+            num += key
+            if symbol.isupper():
+                if num > ord('Z'):
+                    num -= 26
+                elif num < ord('A'):
+                    num += 26
+                # A_base + 25 - (num - A_base) = A_base * 2 + 25 - num 
+                # print('From %s to ' % chr(num))
+                num = ord('A') * 2 + 25 - num
+                # print('%s.' % chr(num))
+            elif symbol.islower():
+                if num > ord('z'):
+                    num -= 26
+                elif num < ord('a'):
+                    num += 26
+                # a_base + 25 - (num - a_base) = a_base * 2 + 25 - num 
+                # print('From %s to ' % chr(num))
+                num = ord('a') * 2 + 25 - num
+                # print('%s.' % chr(num))
+            translated += chr(num)
+        else:
+            translated += symbol
+    return translated
+# mode = getMode()
+# key = getKey()
+# print('Your translated text is:')
+# print(getTranslatedMessage(mode, message, key))
+message = getMessage()
+print(getTranslatedMessage('e', message, 3))
+
+
+# A_base + 26 - (num - A_base) = A_base * 2 + 26 - num 
